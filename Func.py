@@ -1,6 +1,6 @@
 import random
 
-def card_choicer():
+def card_chooser(players):
 
     cards = [
     "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "10S", "JS", "QS", "KS", "AS",
@@ -8,10 +8,18 @@ def card_choicer():
     "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "10D", "JD", "QD", "KD", "AD",
     "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "10C", "JC", "QC", "KC", "AC"
     ]
-
-    shuffle = random.choices(cards, k=5)
-
-    return shuffle
+    
+    random.shuffle(cards)
+    
+    all_player = []
+    for _ in range(players):
+        hand = []
+        for _ in range(5):
+            card = cards.pop()
+            hand.append(card)
+        all_player.append(hand)
+    
+    return all_player
 
 # -----------------------------------------------------------------------------------------------
 
@@ -26,8 +34,7 @@ def card_replacer(players_cards):
         
     for value in players_cards.values():
         for item in value:
-            if item in cards:
-                cards.remove(item)
+            cards.remove(item)
 
     shuffle = random.choice(cards)
 
@@ -59,15 +66,15 @@ def points_counter(player_cards):
 
 def colours_counter(player_cards):
 
-    colors = {"S": 0, "H": 0, "D": 0, "C": 0}
+    colours = {"S": 0, "H": 0, "D": 0, "C": 0}
     
     for card in player_cards:
         suit = card[-1]
-        colors[suit] += 1
+        colours[suit] += 1
 
-    max_key = max(colors, key=lambda x: colors[x])
+    max_key = max(colours, key=lambda x: colours[x])
 
-    return max_key
+    return colours[max_key]
 
 # -----------------------------------------------------------------------------------------------
 

@@ -1,15 +1,13 @@
 from Func import *
 
-PLAYER_NAMES = []
+NUMBER_OF_PLAYERS = 3
 dealt_cards = {}
 
-for player in range(3):
+deal_cards = card_chooser(NUMBER_OF_PLAYERS)
+
+for player in range(NUMBER_OF_PLAYERS):
     name = input("Please enter your name: ")
-    PLAYER_NAMES.append(name)
-
-for player in PLAYER_NAMES:
-    dealt_cards[player] = card_choicer()
-
+    dealt_cards[name] = deal_cards[player]
 
 for name, cards in dealt_cards.items():
 
@@ -29,5 +27,7 @@ print()
 
 for name, cards in dealt_cards.items():
     hand = ', '.join(cards)
-    print(f"{name}, you are holding {hand}. Your total score is {points_counter(cards)}, The most common color is {colours_counter(cards)}, You have {value_counter(cards)} of a kind")
+    print(f"{name}, you are holding {hand}. Your total score is {points_counter(cards)}, The maximum number of colors is {colours_counter(cards)}, You have {value_counter(cards)} of a kind")
+
+
 
