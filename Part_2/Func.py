@@ -49,7 +49,7 @@ def points_counter(player_cards):
     for item in player_cards:
         if len(item) == 3:
             points += 10
-        if item[0].isdigit():
+        elif item[0].isdigit():
             points += int(item[0])
         if item[0] == "J":
             points += 11
@@ -95,30 +95,58 @@ def value_counter(player_cards):
 
     return values[max_key]
 
+
 # -----------------------------------------------------------------------------------------------
 
-def find_max_by_method(dealt_cards: dict, method) -> bool:
-    player_points = dict()
+def find_min_max(player_points: dict) -> tuple:
     max_points_counter = 0
     max_points_name = str()
-
-    for name, cards in dealt_cards.items():
-        player_points[name] = method(cards)
-
+    min_points_name = str()
     max_points = max(player_points.values())
+    min_points = min(player_points.values())
 
     for player in player_points:
         if player_points[player] == max_points:
             max_points_name = player
             max_points_counter += 1
+        if player_points[player] == min_points:
+            min_points_name = player
+    return max_points_counter, max_points_name, max_points, min_points_name, min_points
+
+
+# -----------------------------------------------------------------------------------------------
+
+def won_by(method) -> str:
+    if method == points_counter:
+        return "Points"
+    elif method == colours_counter:
+        return "Colours"
+    elif method == value_counter:
+        return "Cards"
+
+# -----------------------------------------------------------------------------------------------
+
+def find_max_by_method(dealt_cards: dict, method) -> bool:
+    player_points = dict()
+    player_won_by = won_by(method)
+
+    for name, cards in dealt_cards.items():
+        player_points[name] = method(cards)
+
+    max_points_counter, max_points_name, max_points, min_points_name, min_points = find_min_max(player_points)
 
     if max_points_counter == 1:
-        print(f"Player {max_points_name} won.")
+        cards = dealt_cards[max_points_name]
+        print(f"Player {max_points_name} won by {player_won_by} with {cards}.")
         return True
+    elif min_points_name != str() and min_points != max_points:
+        dealt_cards.pop(min_points_name)
+
 
 # -----------------------------------------------------------------------------------------------
 
 def decide_winner(dealt_cards: dict):
-    find_max_by_method(dealt_cards, points_counter)
-    find_max_by_method(dealt_cards, colours_counter)
-    find_max_by_method(dealt_cards, value_counter)
+    if find_max_by_method(dealt_cards, points_counter) or find_max_by_method(dealt_cards, colours_counter) or find_max_by_method(dealt_cards, value_counter):
+        return
+    else:
+        print("Match ended with draw.")

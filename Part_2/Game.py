@@ -1,19 +1,31 @@
 from Func import *
 
 NUMBER_OF_PLAYERS = 3
+PLAYERS = set()
+
 dealt_cards = {}
 
 deal_cards = card_chooser(NUMBER_OF_PLAYERS)
 
-for player in range(NUMBER_OF_PLAYERS):
+player_index = 0
+
+while len(PLAYERS) != 3:
     name = input("Please enter your name: ")
-    dealt_cards[name] = deal_cards[player]
+    if not (name in PLAYERS):
+        dealt_cards[name] = deal_cards[player_index]
+        PLAYERS.add(name)
+        player_index += 1
+    else:
+        print(f"Player by name {name} already exists.")
+
+print()
 
 for name, cards in dealt_cards.items():
 
     while True:
         hand = ', '.join(cards)
         user_answer = input(f"{name}, you are holding {hand}. \nif you want to change the card, choose the appropriate index from 1 to 5 inclusive, or enter 'NO': ")
+        print()
         if user_answer == "NO":
             break
         elif user_answer in "12345":
@@ -23,10 +35,10 @@ for name, cards in dealt_cards.items():
         else:
             print("Please enter a correct answer!")
 
-print()
-
-decide_winner(dealt_cards)
-
 for name, cards in dealt_cards.items():
     hand = ', '.join(cards)
     print(f"{name}, you are holding {hand}. Your total score is {points_counter(cards)}, The maximum number of colors is {colours_counter(cards)}, You have {value_counter(cards)} of a kind")
+
+print()
+
+decide_winner(dealt_cards)
