@@ -109,9 +109,8 @@ def find_min_max(player_points: dict) -> tuple:
         if player_points[player] == max_points:
             max_points_name = player
             max_points_counter += 1
-        if player_points[player] < max_points:
+        if player_points[player] == min_points:
             min_points_name = player
-            print(f"Player {min_points_name} lost the game.")
 
     return max_points_counter, max_points_name, max_points, min_points_name, min_points
 
@@ -137,12 +136,13 @@ def find_max_by_method(dealt_cards: dict, method) -> bool:
 
     max_points_counter, max_points_name, max_points, min_points_name, min_points = find_min_max(player_points)
 
-    if max_points_counter == 1:
+    if min_points_name != str() and min_points != max_points:
+        print(f"Player {min_points_name} lost by {won_by(method)}")
+        dealt_cards.pop(min_points_name)
+    if len(dealt_cards) == 1:
         cards = dealt_cards[max_points_name]
         print(f"Player {max_points_name} won by {player_won_by} with hand {cards}.")
         return True
-    elif min_points_name != str() and min_points != max_points:
-        dealt_cards.pop(min_points_name)
 
 
 # -----------------------------------------------------------------------------------------------
