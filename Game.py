@@ -1,7 +1,6 @@
 from Func import *
 
 NUMBER_OF_PLAYERS = 3
-PLAYERS = set()
 
 dealt_cards = {}
 
@@ -9,11 +8,10 @@ deal_cards = card_chooser(NUMBER_OF_PLAYERS)
 
 player_index = 0
 
-while len(PLAYERS) != 3:
+while len(dealt_cards) != NUMBER_OF_PLAYERS:
     name = input("Please enter your name: ")
-    if not (name in PLAYERS):
+    if not (name in dealt_cards):
         dealt_cards[name] = deal_cards[player_index]
-        PLAYERS.add(name)
         player_index += 1
     else:
         print(f"Player by name {name} already exists.")
