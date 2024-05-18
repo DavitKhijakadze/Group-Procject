@@ -1,16 +1,22 @@
 from Func import *
 
-number_of_players = int(input("Enter the number of players: "))
-names_of_players = []
+NUMBER_OF_PLAYERS = 3
+PLAYERS = set()
+
 dealt_cards = {}
 
-if len(dealt_cards) == 0:       
-    while len(names_of_players) != number_of_players:
-        name = input("Please enter your name: ")
-        if name not in names_of_players:
-            names_of_players.append(name)
-        else:
-            print(f"Player by name {name} already exists.")
+deal_cards = card_chooser(NUMBER_OF_PLAYERS)
+
+player_index = 0
+
+while len(PLAYERS) != 3:
+    name = input("Please enter your name: ")
+    if not (name in PLAYERS):
+        dealt_cards[name] = deal_cards[player_index]
+        PLAYERS.add(name)
+        player_index += 1
+    else:
+        print(f"Player by name {name} already exists.")
 
 while True:
     
