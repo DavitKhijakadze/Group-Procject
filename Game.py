@@ -31,7 +31,7 @@ while True:
             print()
             if user_answer == "NO":
                 break
-            elif user_answer in "12345":
+            elif user_answer in ["1", "2", "3", "4", "5"]:
                 index = int(user_answer) - 1
                 dealt_cards[name][index] = card_replacer(dealt_cards)
                 break
